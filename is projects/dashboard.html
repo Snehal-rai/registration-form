@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h2 class="heading">User Dashboard</h2>
+      <table id="dashboardTable">
+        <thead>
+          <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Mobile No</th>
+            <th>Username</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- User data will be inserted here dynamically -->
+        </tbody>
+      </table>
+      <button onclick="goBack()" class="btn">Back</button>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+      // Display user data in dashboard
+      function displayUserData() {
+        var dashboardTable = document.getElementById("dashboardTable");
+        dashboardTable.innerHTML = ""; // Clear table content
+
+        for (var i = 0; i < sessionStorage.length; i++) {
+          var key = sessionStorage.key(i);
+          var userData = JSON.parse(sessionStorage.getItem(key));
+
+          var row = dashboardTable.insertRow();
+          row.insertCell(0).textContent = userData.fullName;
+          row.insertCell(1).textContent = userData.email;
+          row.insertCell(2).textContent = userData.mobile;
+          row.insertCell(3).textContent = userData.username;
+          var actionCell = row.insertCell(4);
+          var updateButton = document.createElement("button");
+          updateButton.textContent = "Update";
+          updateButton.classList.add("btn", "btn-update");
+          updateButton.onclick = function () {
+            // Implement update functionality here
+            alert("Update functionality to be implemented");
+          };
+          actionCell.appendChild(updateButton);
+
+          var deleteButton = document.createElement("button");
+          deleteButton.textContent = "Delete";
+          deleteButton.classList.add("btn", "btn-delete");
+          deleteButton.onclick = function () {
+            // Implement delete functionality here
+            var row = this.parentNode.parentNode;
+            var username = row.cells[3].textContent;
+            sessionStorage.removeItem(username);
+            row.remove();
+          };
+          actionCell.appendChild(deleteButton);
+        }
+      }
+
+      window.onload = displayUserData;
+
+      function goBack() {
+        window.location.href = "index.html";
+      }
+    </script>
+  </body>
+</html>

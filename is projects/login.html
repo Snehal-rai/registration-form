@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Login</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h2 class="heading">User Login</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginUsername">Username:</label>
+          <input type="text" id="loginUsername" name="loginUsername" required />
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password:</label>
+          <input
+            type="password"
+            id="loginPassword"
+            name="loginPassword"
+            required
+          />
+        </div>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent form submission
+
+          // Get form values
+          var loginUsername = document.getElementById("loginUsername").value;
+          var loginPassword = document.getElementById("loginPassword").value;
+
+          // Check if the user exists in session storage
+          var userData = JSON.parse(sessionStorage.getItem(loginUsername));
+          if (userData && userData.password === loginPassword) {
+            // Redirect to dashboard page
+            window.location.href = "dashboard.html";
+          } else {
+            // Display error message or handle invalid login
+            alert("Invalid username or password!");
+          }
+        });
+    </script>
+  </body>
+</html>
